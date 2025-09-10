@@ -19,6 +19,7 @@ export interface Promotion {
     imageUrl: string;
     endDate?: string;
     discount?: string;
+    price?: number;
 }
 
 export interface Order {

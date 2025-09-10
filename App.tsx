@@ -10,7 +10,7 @@ import FloatingWhatsAppButton from './components/FloatingWhatsAppButton';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminPanel from './pages/admin/AdminPanel';
 import { ordersData as initialOrdersData } from './data/ordersData';
-import type { Product, CartItem, Order } from './types';
+import type { Product, CartItem, Order, Promotion } from './types';
 
 const App: React.FC = () => {
     // State for routing and cart management
@@ -55,6 +55,30 @@ const App: React.FC = () => {
                 );
             }
             return [...prevCart, { ...product, quantity: 1 }];
+        });
+    };
+
+    const handleAddToCartPromotion = (promotion: Promotion) => {
+        if (typeof promotion.price !== 'number') return;
+
+        const promoAsCartItem: CartItem = {
+            id: promotion.id,
+            name: promotion.title,
+            description: promotion.description,
+            price: promotion.price,
+            imageUrl: promotion.imageUrl,
+            category: 'Promoción',
+            quantity: 1,
+        };
+
+        setCart(prevCart => {
+            const existingItem = prevCart.find(item => item.id === promoAsCartItem.id);
+            if (existingItem) {
+                return prevCart.map(item =>
+                    item.id === promoAsCartItem.id ? { ...item, quantity: item.quantity + 1 } : item
+                );
+            }
+            return [...prevCart, promoAsCartItem];
         });
     };
 
@@ -126,7 +150,7 @@ const App: React.FC = () => {
             case 'menu':
                 return <MenuPage onAddToCart={handleAddToCart} />;
             case 'promociones':
-                return <PromotionsPage />;
+                return <PromotionsPage onAddToCart={handleAddToCartPromotion} />;
             case 'pedidos':
                 return <OrderPage cart={cart} onUpdateQuantity={handleUpdateQuantity} onClearCart={handleClearCart} onNavigate={handleNavigate} onPlaceOrder={handlePlaceOrder}/>;
             case 'contacto':

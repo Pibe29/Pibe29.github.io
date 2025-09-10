@@ -1,8 +1,13 @@
 import React from 'react';
 import { promotionsData } from '../data/promotionsData';
 import PromotionCard from '../components/PromotionCard';
+import type { Promotion } from '../types';
 
-const PromotionsPage: React.FC = () => {
+interface PromotionsPageProps {
+    onAddToCart: (promotion: Promotion) => void;
+}
+
+const PromotionsPage: React.FC<PromotionsPageProps> = ({ onAddToCart }) => {
     return (
         <div className="py-12 sm:py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,7 +18,7 @@ const PromotionsPage: React.FC = () => {
 
                 <div className="space-y-12">
                     {promotionsData.map(promo => (
-                        <PromotionCard key={promo.id} promotion={promo} />
+                        <PromotionCard key={promo.id} promotion={promo} onAddToCart={onAddToCart} />
                     ))}
                 </div>
             </div>
