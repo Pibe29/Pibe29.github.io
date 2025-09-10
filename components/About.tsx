@@ -18,7 +18,7 @@ const About: React.FC = () => {
                             Nuestra Pasión por el Sabor
                         </h2>
                         <p className="mt-4 text-lg text-gray-300">
-                            En Alitas Calientes Express, no solo servimos comida, creamos experiencias. Nuestra especialidad son las alitas, marinadas a la perfección y cubiertas con nuestras salsas secretas que van desde un toque picante hasta un fuego que solo los valientes se atreven a probar.
+                            En Alifast, no solo servimos comida, creamos experiencias. Nuestra especialidad son las alitas, marinadas a la perfección y cubiertas con nuestras salsas secretas que van desde un toque picante hasta un fuego que solo los valientes se atreven a probar.
                         </p>
                         <p className="mt-4 text-lg text-gray-300">
                             Además de nuestras famosas alitas, ofrecemos clásicos de la comida rápida como salchipapas generosas y un pollo broaster irresistiblemente crujiente. Cada plato se prepara con ingredientes frescos y de la más alta calidad, porque tu satisfacción es nuestro principal ingrediente.

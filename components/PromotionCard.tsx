@@ -29,7 +29,7 @@ const PromotionCard: React.FC<PromotionCardProps> = ({ promotion, onAddToCart })
                     </div>
                      {promotion.price && (
                         <div className="flex items-center gap-4">
-                            <span className="text-2xl font-bold text-brand-yellow">${promotion.price.toFixed(2)}</span>
+                            <span className="text-2xl font-bold text-brand-yellow">S/{promotion.price.toFixed(2)}</span>
                             <button 
                                 onClick={() => onAddToCart(promotion)}
                                 className="px-5 py-2 bg-brand-red hover:bg-red-700 text-white font-bold rounded-full transition-transform duration-300 ease-in-out transform hover:scale-105 whitespace-nowrap"

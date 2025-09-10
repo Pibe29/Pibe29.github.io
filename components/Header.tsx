@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, cartCount }) => {
                 <div className="flex items-center justify-between h-20">
                     <div className="flex-shrink-0">
                         <button onClick={() => onNavigate('home')} className="text-white text-2xl font-anton tracking-wider">
-                            ALITAS <span className="text-brand-red">EXPRESS</span> 🔥
+                            Alifast <span className="text-brand-red">¡Alitas Fritas & Más!</span> 🔥
                         </button>
                     </div>
                     <nav className="hidden md:block">

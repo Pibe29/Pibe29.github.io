@@ -4,12 +4,16 @@ export interface Product {
     description: string;
     price: number;
     category: string;
+    subCategory?: string;
     imageUrl: string;
     tags?: string[];
+    requiresSauce?: boolean;
+    maxSauces?: number;
 }
 
 export interface CartItem extends Product {
     quantity: number;
+    sauces?: string[];
 }
 
 export interface Promotion {

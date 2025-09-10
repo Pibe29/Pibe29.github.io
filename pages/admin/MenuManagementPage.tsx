@@ -4,7 +4,7 @@ import type { Product } from '../../types';
 import AdminModal from '../../components/admin/AdminModal';
 
 const MenuManagementPage: React.FC = () => {
-    const [menuItems, setMenuItems] = useState<Product[]>(initialMenuData);
+    const [menuItems, setMenuItems] = useState<Product[]>(initialMenuData.filter(item => item.category !== 'Sabor de Alitas'));
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState<Product | null>(null);
 
@@ -60,7 +60,7 @@ const MenuManagementPage: React.FC = () => {
                             <tr key={item.id}>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{item.name}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{item.category}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-yellow font-semibold">${item.price.toFixed(2)}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-yellow font-semibold">S/{item.price.toFixed(2)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <button onClick={() => handleEdit(item)} className="text-blue-400 hover:text-blue-300 mr-4">Editar</button>
                                     <button onClick={() => handleDelete(item.id)} className="text-red-500 hover:text-red-400">Eliminar</button>
@@ -83,11 +83,17 @@ const MenuManagementPage: React.FC = () => {
 
 // Sub-component for the form modal
 const ItemFormModal: React.FC<{item: Product | null; onClose: () => void; onSave: (item: Product) => void;}> = ({ item, onClose, onSave }) => {
-    const [formData, setFormData] = useState<Partial<Product>>(item || { name: '', description: '', price: 0, category: 'Alitas', imageUrl: '' });
+    const [formData, setFormData] = useState<Partial<Product>>(item || { name: '', description: '', price: 0, category: 'Alitas', imageUrl: '', subCategory: '', requiresSauce: false, maxSauces: 0 });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: name === 'price' ? parseFloat(value) : value }));
+        const { name, value, type } = e.target;
+
+        if (type === 'checkbox') {
+            const { checked } = e.target as HTMLInputElement;
+            setFormData(prev => ({ ...prev, [name]: checked }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: (name === 'price' || name === 'maxSauces') ? parseFloat(value) : value }));
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -103,10 +109,20 @@ const ItemFormModal: React.FC<{item: Product | null; onClose: () => void; onSave
                 <input name="price" type="number" step="0.01" value={formData.price || 0} onChange={handleChange} placeholder="Precio" required className="w-full p-2 bg-zinc-700 rounded" />
                 <select name="category" value={formData.category} onChange={handleChange} className="w-full p-2 bg-zinc-700 rounded">
                     <option>Alitas</option>
-                    <option>Platos Fuertes</option>
+                    <option>Broaster</option>
+                    <option>Salchipapas</option>
+                    <option>Agregados</option>
                     <option>Bebidas</option>
                 </select>
+                <input name="subCategory" value={formData.subCategory || ''} onChange={handleChange} placeholder="Sub-categoría (e.g., Porciones personales)" className="w-full p-2 bg-zinc-700 rounded" />
                 <input name="imageUrl" value={formData.imageUrl || ''} onChange={handleChange} placeholder="URL de la imagen" required className="w-full p-2 bg-zinc-700 rounded" />
+                <div className="flex items-center gap-2 pt-2">
+                    <input name="requiresSauce" type="checkbox" checked={formData.requiresSauce || false} onChange={handleChange} id="requiresSauce" className="h-4 w-4 bg-zinc-700 rounded border-zinc-600 text-brand-orange focus:ring-brand-orange" />
+                    <label htmlFor="requiresSauce" className="text-sm text-gray-300">Requiere selección de salsa</label>
+                </div>
+                 {formData.requiresSauce && (
+                    <input name="maxSauces" type="number" step="1" value={formData.maxSauces || 1} onChange={handleChange} placeholder="Máximo de salsas" className="w-full p-2 bg-zinc-700 rounded" />
+                 )}
                 <div className="flex justify-end gap-4 pt-4">
                     <button type="button" onClick={onClose} className="px-4 py-2 bg-zinc-600 rounded">Cancelar</button>
                     <button type="submit" className="px-4 py-2 bg-brand-red rounded">Guardar</button>

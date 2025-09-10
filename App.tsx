@@ -11,6 +11,7 @@ import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminPanel from './pages/admin/AdminPanel';
 import { ordersData as initialOrdersData } from './data/ordersData';
 import type { Product, CartItem, Order, Promotion } from './types';
+import SauceSelectionModal from './components/SauceSelectionModal';
 
 const App: React.FC = () => {
     // State for routing and cart management
@@ -18,6 +19,8 @@ const App: React.FC = () => {
     const [cart, setCart] = useState<CartItem[]>([]);
     const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
     const [orders, setOrders] = useState<Order[]>(initialOrdersData);
+    const [sauceSelectionProduct, setSauceSelectionProduct] = useState<Product | null>(null);
+
     
     // Load cart from local storage on initial render
     useEffect(() => {
@@ -46,16 +49,46 @@ const App: React.FC = () => {
         window.scrollTo(0, 0); // Scroll to top on page change
     };
 
-    const handleAddToCart = (product: Product) => {
+    const addProductToCart = (product: Product, sauces?: string[]) => {
+        const saucesId = sauces?.sort().join('-').replace(/\s+/g, '-') || '';
+        const cartItemId = saucesId ? `${product.id}-${saucesId}` : product.id;
+        
+        const saucesText = sauces?.join(', ');
+        const cartItemName = saucesText ? `${product.name} (${saucesText})` : product.name;
+
         setCart(prevCart => {
-            const existingItem = prevCart.find(item => item.id === product.id);
+            const existingItem = prevCart.find(item => item.id === cartItemId);
             if (existingItem) {
-                return prevCart.map(item => 
-                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                return prevCart.map(item =>
+                    item.id === cartItemId ? { ...item, quantity: item.quantity + 1 } : item
                 );
             }
-            return [...prevCart, { ...product, quantity: 1 }];
+            const newItem: CartItem = {
+                ...product,
+                id: cartItemId,
+                name: cartItemName,
+                quantity: 1,
+                sauces: sauces
+            };
+            return [...prevCart, newItem];
         });
+    };
+
+    const handleAddToCart = (product: Product) => {
+        if (product.requiresSauce) {
+            setSauceSelectionProduct(product);
+            return;
+        }
+        addProductToCart(product);
+    };
+
+    const handleSaucesConfirmed = (product: Product, sauces: string[]) => {
+        addProductToCart(product, sauces);
+        setSauceSelectionProduct(null);
+    };
+
+    const handleCloseSauceModal = () => {
+        setSauceSelectionProduct(null);
     };
 
     const handleAddToCartPromotion = (promotion: Promotion) => {
@@ -104,8 +137,8 @@ const App: React.FC = () => {
             customerPhone: customerData.phone,
             customerAddress: customerData.address,
             items: orderCart.map(item => ({
-                id: item.id,
-                name: item.name,
+                id: item.id, // This will be the unique id with sauce
+                name: item.name, // This will be the name with sauce
                 quantity: item.quantity,
                 price: item.price,
             })),
@@ -168,6 +201,13 @@ const App: React.FC = () => {
             </main>
             <Footer onNavigate={handleNavigate} />
             <FloatingWhatsAppButton phoneNumber="1234567890" />
+            {sauceSelectionProduct && (
+                <SauceSelectionModal
+                    product={sauceSelectionProduct}
+                    onClose={handleCloseSauceModal}
+                    onConfirm={handleSaucesConfirmed}
+                />
+            )}
         </div>
     );
 };

@@ -54,7 +54,7 @@ const OrdersManagementPage: React.FC<OrdersManagementPageProps> = ({ orders, onU
                             <tr key={order.id}>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-400">{order.id}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{order.customerName}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-yellow font-semibold">${order.total.toFixed(2)}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-yellow font-semibold">S/{order.total.toFixed(2)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColors[order.status]}`}>
                                         {order.status}
@@ -75,13 +75,13 @@ const OrdersManagementPage: React.FC<OrdersManagementPageProps> = ({ orders, onU
                         <p><strong>Cliente:</strong> {selectedOrder.customerName}</p>
                         <p><strong>Teléfono:</strong> {selectedOrder.customerPhone}</p>
                         <p><strong>Dirección:</strong> {selectedOrder.customerAddress}</p>
-                        <p><strong>Total:</strong> <span className="font-bold text-brand-yellow">${selectedOrder.total.toFixed(2)}</span></p>
+                        <p><strong>Total:</strong> <span className="font-bold text-brand-yellow">S/{selectedOrder.total.toFixed(2)}</span></p>
                         <p><strong>Método de Pago:</strong> {selectedOrder.paymentMethod}</p>
                         <div>
                             <strong>Items:</strong>
                             <ul className="list-disc pl-5 mt-2 space-y-1">
                                 {selectedOrder.items.map(item => (
-                                    <li key={item.id}>{item.quantity}x {item.name} (@ ${item.price.toFixed(2)})</li>
+                                    <li key={item.id}>{item.quantity}x {item.name} (@ S/{item.price.toFixed(2)})</li>
                                 ))}
                             </ul>
                         </div>

@@ -11,7 +11,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8">
                     <div className="space-y-8 xl:col-span-1">
                          <button onClick={() => onNavigate('home')} className="text-white text-3xl font-anton tracking-wider">
-                            ALITAS <span className="text-brand-red">EXPRESS</span> 🔥
+                            Alifast <span className="text-brand-red">¡Alitas Fritas & Más!</span> 🔥
                         </button>
                         <p className="text-gray-400 text-base">
                             El sabor que enciende tu mundo. Las mejores alitas, siempre frescas, siempre deliciosas.

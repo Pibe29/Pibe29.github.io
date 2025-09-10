@@ -46,7 +46,7 @@ const OrderPage: React.FC<OrderPageProps> = ({ cart, onUpdateQuantity, onClearCa
         });
         
         message += `\n*Método de Pago:* ${formData.paymentMethod}\n`;
-        message += `*Total a Pagar:* $${total.toFixed(2)}\n\n`;
+        message += `*Total a Pagar:* S/${total.toFixed(2)}\n\n`;
         message += `¡Gracias! Espero la confirmación.`;
 
         const encodedMessage = encodeURIComponent(message);
@@ -104,14 +104,14 @@ const OrderPage: React.FC<OrderPageProps> = ({ cart, onUpdateQuantity, onClearCa
                                     <img src={item.imageUrl} alt={item.name} className="w-20 h-20 rounded-md object-cover"/>
                                     <div className="flex-grow">
                                         <h3 className="font-bold text-lg text-gray-200">{item.name}</h3>
-                                        <p className="text-brand-yellow font-semibold">${item.price.toFixed(2)}</p>
+                                        <p className="text-brand-yellow font-semibold">S/{item.price.toFixed(2)}</p>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="w-8 h-8 bg-zinc-700 rounded-full font-bold">-</button>
                                         <span className="w-8 text-center font-bold">{item.quantity}</span>
                                         <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)} className="w-8 h-8 bg-zinc-700 rounded-full font-bold">+</button>
                                     </div>
-                                    <p className="font-bold text-lg w-20 text-right">${(item.price * item.quantity).toFixed(2)}</p>
+                                    <p className="font-bold text-lg w-20 text-right">S/{(item.price * item.quantity).toFixed(2)}</p>
                                     <button onClick={() => onUpdateQuantity(item.id, 0)} className="text-gray-500 hover:text-brand-red">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                     </button>
@@ -124,7 +124,7 @@ const OrderPage: React.FC<OrderPageProps> = ({ cart, onUpdateQuantity, onClearCa
                         <h2 className="text-2xl font-bold font-anton text-brand-orange mb-4">Finalizar Compra</h2>
                         <div className="flex justify-between items-baseline mb-4 text-2xl font-bold">
                             <span>Total:</span>
-                            <span className="text-brand-yellow">${total.toFixed(2)}</span>
+                            <span className="text-brand-yellow">S/{total.toFixed(2)}</span>
                         </div>
                         <form onSubmit={handleFormSubmit} className="space-y-4">
                              <input type="text" name="name" placeholder="Nombre completo" value={formData.name} onChange={handleFormChange} required className="w-full p-3 bg-zinc-700 rounded border border-zinc-600 focus:outline-none focus:ring-2 focus:ring-brand-orange text-white" />
