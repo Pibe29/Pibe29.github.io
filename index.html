@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Alitas Calientes Express - ¡El Sabor que Enciende!</title>
+    <meta name="description" content="Descubre las mejores alitas calientes, salchipapas y pollo broaster de la ciudad. ¡Haz tu pedido ahora y disfruta de un sabor inolvidable! Moderno, rápido y delicioso." />
+    <meta name="keywords" content="alitas calientes, comida rápida, salchipapa, pollo broaster, restaurante, pedido en línea, domicilio" />
+    <meta name="author" content="Alitas Calientes Express" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'anton': ['Anton', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-red': '#D9230F',
+                        'brand-orange': '#F27405',
+                        'brand-yellow': '#F2B705',
+                        'dark-bg': '#1a1a1a',
+                    },
+                    backgroundImage: {
+                        'hero-wings': "url('https://picsum.photos/id/1060/1600/900?blur=2')",
+                    }
+                }
+            }
+        }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/"
+  }
+}
+</script>
+</head>
+<body class="bg-dark-bg text-gray-200 font-inter">
+    <div id="root"></div>
+</body>
+</html>
